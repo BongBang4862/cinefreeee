@@ -42,15 +42,25 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     
 
     // Realizar la consulta a la API de Dbmovies
-    $url = "https://api.themoviedb.org/3/search/movie?api_key=$api_key&query=$busqueda";
-    $resultado = file_get_contents($url);
-    // Decodificar el resultado de la API
-    $peliculas = json_decode($resultado);
-    var_dump($peliculas);
+        $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda}&page=";
 
-    if (isset($peliculas)) {
+        $page = 1;
+        $results = array();
+
+        do {
+            $url = $base_url . $page;
+            $json = file_get_contents($url);
+            $data = json_decode($json);
+            $results = array_merge($results, $data->results);
+            $page++;
+        } while ($data->total_pages >= $page);
+
+   
+   
+
+    if (isset($results)) {
     echo "<section class='peliculas'>";
-    foreach ($peliculas->results as $pelicula) {
+    foreach ($results as $pelicula) {
         $titulo = isset($pelicula->original_title) ? $pelicula->original_title : "Título desconocido";
         $sinopsis = isset($pelicula->overview) ? $pelicula->overview : "Sinopsis desconocida";
         $imagen = "https://image.tmdb.org/t/p/w500/" . $pelicula->poster_path;
