@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,65 +20,46 @@
         <input type="text" id="busqueda" name="busqueda">
         <button type="submit">Buscar</button>
     </form>
-        <main>
-       
-    </main>
+    <main>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        // Obtener el término de búsqueda del formulario
+        $busqueda = $_GET['busqueda'];
+        if (isset($busqueda)) {
+            // Realizar la consulta a la API de Dbmovies
+            $api_key = "4893e4a751f59e2248b2776c1ac7eb78";
+            $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda}&page=";
+            $page = 1;
+            $results = array();
 
+            do {
+                $url = $base_url . $page;
+                $json = file_get_contents($url);
+                $data = json_decode($json);
+                $results = array_merge($results, $data->results);
+                $page++;
+            } while ( $page <= 2);
+
+            if (isset($results) && !empty($results)) {
+                echo "<table class='peliculas'>";
+                foreach ($results as $pelicula) {
+                    $titulo = isset($pelicula->original_title) ? $pelicula->original_title : "Título desconocido";
+                    $sinopsis = isset($pelicula->overview) ? $pelicula->overview : "Sinopsis desconocida";
+                    $imagen = "https://image.tmdb.org/t/p/w500/" . $pelicula->poster_path;
+                    echo "<tr>";
+                    echo "<td><img src='$imagen' width=100 height=100   alt='$titulo'></td>";
+                    echo "<td><h2>$titulo</h2></td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+            } else {
+                echo "<p>No se encontraron resultados para \"$busqueda\".</p>";
+            }
+        }
+    }
+    ?>
+    </main>
     <p>¿No tienes una cuenta? <a href="registro.php">Regístrate aquí</a>.</p>
 </div>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    var_dump($_SERVER["REQUEST_METHOD"]);
-    $busqueda = $_GET["busqueda"];
-    $api_key = "4893e4a751f59e2248b2776c1ac7eb78";
-    // buscar.php - procesar la búsqueda
-
-    // Verificar si se envió un término de búsqueda
-    
-
-    // Obtener el término de búsqueda del formulario
-    $busqueda = $_GET['busqueda'];
-    
-
-    // Realizar la consulta a la API de Dbmovies
-        $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda}&page=";
-
-        $page = 1;
-        $results = array();
-
-        do {
-            $url = $base_url . $page;
-            $json = file_get_contents($url);
-            $data = json_decode($json);
-            $results = array_merge($results, $data->results);
-            $page++;
-        } while ($data->total_pages >= $page);
-
-   
-   
-
-    if (isset($results)) {
-    echo "<section class='peliculas'>";
-    foreach ($results as $pelicula) {
-        $titulo = isset($pelicula->original_title) ? $pelicula->original_title : "Título desconocido";
-        $sinopsis = isset($pelicula->overview) ? $pelicula->overview : "Sinopsis desconocida";
-        $imagen = "https://image.tmdb.org/t/p/w500/" . $pelicula->poster_path;
-        echo "<div class='pelicula'>";
-        echo "<img src='$imagen' alt='$titulo'>";
-        echo "<h2>$titulo</h2>";
-        echo "<p>$sinopsis</p>";
-        echo "</div>";
-    }
-    echo "</section>";
-} else {
-    echo "<p>No se encontraron resultados para \"$busqueda\".</p>";
-}
-}
-?>
 </body>
 </html>
-
-
-
-
-
