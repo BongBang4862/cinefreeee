@@ -31,7 +31,7 @@
         // Realizar la consulta a la API de Dbmovies
         $api_key = "4893e4a751f59e2248b2776c1ac7eb78";
         $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda}&page=";
-        $results_per_page = 5;
+        $results_per_page = 20;
 
         if (isset($_GET['page']) && is_numeric($_GET['page'])) {
             $page = (int)$_GET['page'];
@@ -46,8 +46,8 @@
         do {
             $url = $base_url . $page;
             $json = file_get_contents($url);
-            $data = json_decode($json);
 
+            $data = json_decode($json);
             // Verificar si ya existen películas en $paginated_results antes de agregar las nuevas películas
             foreach ($data->results as $pelicula) {
                 if (!in_array($pelicula, $paginated_results)) {
@@ -62,8 +62,7 @@
             if ($page > $total_pages) {
               break;
             }
-        } while ($total_results < 100);
-
+        }while ($page <= $total_pages);
     if (!empty($paginated_results)) {
         echo "<table class='peliculas'>";
         foreach (array_slice($paginated_results, $start_index, $results_per_page) as $pelicula) {
@@ -82,8 +81,8 @@
             echo "</tr>";
         }
         echo "</table>";
-            $num_pages = ceil(count($paginated_results) / $results_per_page);
-            for ($i = 1; $i <= $num_pages; $i++) {
+        
+            for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
                     echo "<strong>$i</strong> ";
                 } else {
