@@ -31,41 +31,39 @@
         // Realizar la consulta a la API de Dbmovies
         $api_key = "4893e4a751f59e2248b2776c1ac7eb78";
         $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda}&page=";
-        $results_per_page = 20;
 
         if (isset($_GET['page']) && is_numeric($_GET['page'])) {
             $page = (int)$_GET['page'];
         } else {
             $page = 1;
         }
-
         $paginated_results = array();
-        $total_results = 0;
-
+        var_dump($page);
         // Iterar sobre las páginas y obtener nuevos resultados de la API para cada página
-        do {
             $url = $base_url . $page;
             $json = file_get_contents($url);
-
             $data = json_decode($json);
             // Verificar si ya existen películas en $paginated_results antes de agregar las nuevas películas
             foreach ($data->results as $pelicula) {
-                if (!in_array($pelicula, $paginated_results)) {
+                
                     $paginated_results[] = $pelicula;
-                }
+                
             }
 
             $total_pages = $data->total_pages;
-            $page++;
+            var_dump($total_pages);
 
             // Si ya hemos recuperado todas las páginas de la API, detener el bucle while
-            if ($page > $total_pages) {
-              break;
-            }
-        }while ($page <= $total_pages);
+    for ($i = 1; $i <= $total_pages; $i++) {
+                if ($i == $page) {
+                    echo "<strong>$i</strong> ";
+                } else {
+                    echo "<a href=\"?busqueda=$busqueda&page=$i\">$i</a> ";
+                }
+            }     
     if (!empty($paginated_results)) {
         echo "<table class='peliculas'>";
-        foreach (array_slice($paginated_results, $start_index, $results_per_page) as $pelicula) {
+        foreach ($paginated_results as $pelicula) {
             $titulo = isset($pelicula->original_title) ? $pelicula->original_title : "Título desconocido";
             $sinopsis = isset($pelicula->overview) ? $pelicula->overview : "Sinopsis desconocida";
             $imagen = "https://image.tmdb.org/t/p/w500/" . $pelicula->poster_path;
@@ -82,13 +80,7 @@
         }
         echo "</table>";
         
-            for ($i = 1; $i <= $total_pages; $i++) {
-                if ($i == $page) {
-                    echo "<strong>$i</strong> ";
-                } else {
-                    echo "<a href=\"?busqueda=$busqueda&page=$i\">$i</a> ";
-                }
-            }
+            
 
         } else {
             echo "<p>No se encontraron resultados para \"$busqueda\".</p>";
