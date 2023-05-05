@@ -3,7 +3,7 @@
 <head>
     <title>Login - CineFreeee</title>
     <link rel="stylesheet" type="text/css" href="css/busqueda.css">
-</head>
+</head>s
 <body>
 <div class="container">
     <a href="logout.php">Deslogear</a>
@@ -24,9 +24,7 @@
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Obtener el término de búsqueda del formulario
-    if (!isset($busqueda)) {
-        $busqueda = $_GET['busqueda'];
-    }
+    
     if (isset($busqueda)) {
         // Realizar la consulta a la API de Dbmovies
         $api_key = "4893e4a751f59e2248b2776c1ac7eb78";
@@ -54,39 +52,39 @@
             var_dump($total_pages);
 
             // Si ya hemos recuperado todas las páginas de la API, detener el bucle while
-    for ($i = 1; $i <= $total_pages; $i++) {
+            for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
                     echo "<strong>$i</strong> ";
                 } else {
                     echo "<a href=\"?busqueda=$busqueda&page=$i\">$i</a> ";
                 }
             }     
-    if (!empty($paginated_results)) {
-        echo "<table class='peliculas'>";
-        foreach ($paginated_results as $pelicula) {
-            $titulo = isset($pelicula->original_title) ? $pelicula->original_title : "Título desconocido";
-            $sinopsis = isset($pelicula->overview) ? $pelicula->overview : "Sinopsis desconocida";
-            $imagen = "https://image.tmdb.org/t/p/w500/" . $pelicula->poster_path;
-            $calificacion = isset($pelicula->vote_average) ? $pelicula->vote_average : "N/A";
-            $id = $pelicula->id;
+            if (!empty($paginated_results)) {
+                echo "<table class='peliculas'>";
+                foreach ($paginated_results as $pelicula) {
+                    $titulo = isset($pelicula->original_title) ? $pelicula->original_title : "Título desconocido";
+                    $sinopsis = isset($pelicula->overview) ? $pelicula->overview : "Sinopsis desconocida";
+                    $imagen = "https://image.tmdb.org/t/p/w500/" . $pelicula->poster_path;
+                    $calificacion = isset($pelicula->vote_average) ? $pelicula->vote_average : "N/A";
+                    $id = $pelicula->id;
 
-            echo "<tr>";
-            echo "<td><img src='$imagen' width=100 height=100 alt='$titulo'></td>";
-            echo "<td><h2>$titulo</h2></td>";
-            echo "<td><p>$sinopsis</p></td>";
-            echo "<td><p>Calificación: $calificacion</p></td>";
-            echo "<td><button class='agregar' data-id='$id'>Agregar</button></td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-        
-            
+                    echo "<tr>";
+                    echo "<td><img src='$imagen' width=100 height=100 alt='$titulo'></td>";
+                    echo "<td><h2>$titulo</h2></td>";
+                    echo "<td><p>$sinopsis</p></td>";
+                    echo "<td><p>Calificación: $calificacion</p></td>";
+                    echo "<td><button class='agregar' data-id='$id'>Agregar</button></td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+                
+                    
 
-        } else {
-            echo "<p>No se encontraron resultados para \"$busqueda\".</p>";
+                } else {
+                    echo "<p>No se encontraron resultados para \"$busqueda\".</p>";
+                }
+            }
         }
-    }
-}
 
 
     ?>
