@@ -135,13 +135,49 @@
 		</div>
 
 		<div class="item2">
-			<h2>Columna 2</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis consectetur massa non risus imperdiet, non auctor enim posuere. Aliquam scelerisque, elit sit amet suscipit lobortis, felis tellus bibendum risus, ac blandit nulla lectus ut quam. Vestibulum quis enim ut massa ultricies feugiat in ut lectus. Sed volutpat diam non nulla gravida, non tristique nibh hendrerit. </p>
+			<form action="procesar.php" method="POST">
+		        <label>Título:</label>
+		        <input type="text" name="titulo" required><br>
+
+		        <label>Descripción:</label>
+		        <textarea name="descripcion"></textarea><br>
+
+		        <label>Duración:</label>
+		        <input type="number" name="duracion" required><br>
+
+		        <label>Director:</label>
+		        <input type="text" name="director"><br>
+
+		        <label>Clasificación:</label>
+		        <select name="clasificacion" required>
+		            <option value="G">G</option>
+		            <option value="PG">PG</option>
+		            <option value="PG-13">PG-13</option>
+		            <option value="R">R</option>
+		            <option value="NC-17">NC-17</option>
+		        </select><br>
+
+		        <label>Fecha de Estreno:</label>
+		        <input type="date" name="estreno" required><br>
+
+		        <label>URL de Imagen:</label>
+		        <input type="text" name="imagen" required><br>
+
+		        <label>URL de Trailer:</label>
+		        <input type="text" name="trailer"><br>
+
+		        <label>Disponible:</label>
+		        <input type="checkbox" name="disponible" checked><br>
+
+		        <input type="submit" value="Guardar Película">
+		    </form>
 		</div>
 	</div>
 
 	<footer class="footer">
 		<p>Pie de página</p>
 	</footer>
+	<script src="js/busqueda.js"></script>
+	
 </body>
 </html>
