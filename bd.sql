@@ -14,7 +14,7 @@ CREATE TABLE administradores (
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    contrxapasena VARCHAR(255) NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     activo BOOLEAN DEFAULT TRUE
 );

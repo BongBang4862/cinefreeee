@@ -14,9 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         $admin = new Administrador();
         // Obtener administrador
         $administrador = $admin->obtenerAdministrador($email, $contrasena);
-        if($administrador){
 
-        }
         if($administrador) {
             // Iniciar sesión y redireccionar al repositorio de películas
             $_SESSION['administrador'] = $administrador;

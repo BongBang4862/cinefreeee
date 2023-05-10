@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $contrasena = $_POST["contrasena"];
   
   // Crear una instancia de la clase Usuario y establecer los valores de sus propiedades
-  $admnistrador = new Administrador($nombre, $apellido, $email, $contrasena);
+  $admnistrador = new Administrador;
   
   // Verificar si el correo electrónico ya existe en la base de datos
   if ($admnistrador->existeEmail($email)) {

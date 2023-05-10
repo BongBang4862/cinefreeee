@@ -135,7 +135,7 @@
 		</div>
 
 		<div class="item2">
-			<form action="procesar.php" method="POST">
+			<form action="php/guardarPelicula.php" method="POST">
 		        <label>Título:</label>
 		        <input type="text" name="titulo" required><br>
 
