@@ -165,6 +165,7 @@
 
 		        <label>URL de Trailer:</label>
 		        <input type="text" name="trailer"><br>
+		        <input type="text" hidden name="id_api"><br>
 
 		        <label>Disponible:</label>
 		        <input type="checkbox" name="disponible" checked><br>

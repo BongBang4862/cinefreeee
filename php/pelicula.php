@@ -7,17 +7,17 @@
             $this->conn = $database->getConnection();
         }
 
-        public function agregarPelicula($titulo, $descripcion, $duracion, $director, $clasificacion, $estreno, $imagen, $trailer) {
-            $stmt = $this->conn->prepare("INSERT INTO peliculas (titulo, descripcion,duracion, director, clasificacion,estreno,imagen,trailer) VALUES (?, ?, ?, ?,?, ?, ?)");
-            $stmt->bind_param("ssisssss", $titulo, $descripcion, $duracion, $director, $clasificacion, $estreno, $imagen, $trailer);
+        public function agregarPelicula($titulo, $descripcion, $duracion, $director, $clasificacion, $estreno, $imagen, $trailer, $id_api) {
+            $stmt = $this->conn->prepare("INSERT INTO peliculas (titulo, descripcion,duracion, director, clasificacion,estreno,imagen,trailer,id_api) VALUES (?, ?, ?, ?,?, ?, ?,?,?)");
+            $stmt->bind_param("ssisssssi", $titulo, $descripcion, $duracion, $director, $clasificacion, $estreno, $imagen, $trailer, $id_api);
             $result = $stmt->execute();
             $stmt->close();
             return $result;
         }
 
-        public function buscarPeliculaPorNombre($nombre) {
-            $stmt = $this->conn->prepare("SELECT * FROM peliculas WHERE nombre = ?");
-            $stmt->bind_param("s", $nombre);
+        public function buscarPeliculaPorIdApi($id_api) {
+            $stmt = $this->conn->prepare("SELECT * FROM peliculas WHERE id_api = ?");
+            $stmt->bind_param("s", $id_api);
             $stmt->execute();
 
             $result = $stmt->get_result();

@@ -22,6 +22,9 @@ agregarBotones.forEach(boton => {
         document.querySelector('[name="imagen"]').value = pelicula.poster_path;
         document.querySelector('[name="trailer"]').value = pelicula.video;
         document.querySelector('[name="disponible"]').checked = pelicula.adult;
+        document.querySelector('[name="id_api"]').value = pelicula.id;
+
+
       })
       .catch(error => console.error(error));
   });
