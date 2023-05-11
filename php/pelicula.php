@@ -25,9 +25,9 @@
 
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                return $row;
+                return true;
             } else {
-                return null;
+                return false;
             }
         }
 

@@ -18,19 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Creamos una instancia de la clase Pelicula
     $pelicula = new Pelicula();
     $res =$pelicula->buscarPeliculaPorIdApi($id_api);
-    echo $res['title'];
-    // Guardamos la película en la base de datos
-    if (!$pelicula->buscarPeliculaPorIdApi($id_api)) {
+    if ($res) {
+        // La película ya existe, guardar mensaje en variable de sesión
+        session_start();
+        $_SESSION['mensaje'] = 'La película ya existe en la base de datos.';
+        header('Location: ../busqueda.php');
+    } else {
+        // La película no existe, agregarla a la base de datos
         $guardado = $pelicula->agregarPelicula($titulo, $descripcion, $duracion, $director, $clasificacion, $estreno, $imagen, $trailer, $id_api);
+        if ($guardado) {
+            session_start();
+            $_SESSION['mensaje'] = 'La película ha sido guardada correctamente.';
+            header('Location: ../busqueda.php');
+        } else {
+            echo 'Ha ocurrido un error al guardar la película.';
+        }
     }
     
 
-    if ($guardado) {
-        
-        header('Location: ../busqueda2.php');
-        echo 'La película ha sido guardada correctamente.';
-    } else {
-        echo 'Ha ocurrido un error al guardar la película.';
-    }
+    
 }
 ?>
