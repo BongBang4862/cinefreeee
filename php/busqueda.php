@@ -6,13 +6,17 @@
 	}
 	if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	// Obtener el término de búsqueda del formulario
-	$busqueda = $_GET['busqueda'];
-	
+	if(isset($_GET['busqueda'])){
+		$busqueda = $_GET['busqueda'];
+        $busqueda_codificada = rawurlencode($busqueda);
+
+	}
 	
 	if (isset($busqueda)) {
+
 	    // Realizar la consulta a la API de Dbmovies
 	    $api_key = "4893e4a751f59e2248b2776c1ac7eb78";
-	    $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda}&page=";
+	    $base_url = "https://api.themoviedb.org/3/search/movie?api_key={$api_key}&query={$busqueda_codificada}&page=";
 
 	    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
 	        $page = (int)$_GET['page'];
@@ -20,7 +24,6 @@
 	        $page = 1;
 	    }
 	    $paginated_results = array();
-	    var_dump($page);
 	    // Iterar sobre las páginas y obtener nuevos resultados de la API para cada página
 	        $url = $base_url . $page;
 	        $json = file_get_contents($url);
@@ -33,7 +36,6 @@
 	        }
 
 	        $total_pages = $data->total_pages;
-	        var_dump($total_pages);
 
 	        // Si ya hemos recuperado todas las páginas de la API, detener el bucle while
 	        for ($i = 1; $i <= $total_pages; $i++) {
