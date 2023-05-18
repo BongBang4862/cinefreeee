@@ -2,47 +2,7 @@
 <html>
 <head>
 	<title>Ejemplo de grid en HTML</title>
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			display: grid;
-			grid-template-rows: 300px minmax(0, 50vh) 100px;
-			height: 100vh;
-		}
-
-		header {
-			background-color: #333;
-			color: #fff;
-			padding: 10px;
-		}
-
-		.container {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-template-rows: 1fr;
-			grid-gap: 20px;
-			padding: 20px;
-		}
-
-		.item {
-			background-color: #ccc;
-			padding: 20px;
-			overflow: auto;
-
-		}
-		.item2 {
-			background-color: #ccc;
-			padding: 20px;
-		}
-
-		.footer {
-			background-color: #333;
-			color: #fff;
-			padding: 10px;
-			text-align: center;
-		}
-	</style>
+	<link rel="stylesheet" href="css/busqueda.css">
 </head>
 <body>
 	<header>
